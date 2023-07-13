@@ -26,15 +26,22 @@ public class HttpHeaders {
         final Map<HttpHeader, String> headers = new LinkedHashMap<>();
 
         while (true) {
+            // header 한 줄 추출
             final String line = bufferedReader.readLine();
             if (line.equals("")) {
                 break;
             }
+
             final List<String> header = parseHeader(line);
+
+            // header 타입 추출
             final String headerType = header.get(0).trim();
             HttpHeader headerKey = HttpHeader.getHeaderInstance(headerType);
+
+            // header 값 추출
             final String headerValue = header.get(1).trim();
             if (headerKey != null) {
+                // header map에 넣음
                 headers.put(headerKey, headerValue);
             }
         }

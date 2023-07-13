@@ -33,14 +33,20 @@ public class HttpRequestStartLine {
         List<String> startLineAttributes = Arrays.asList(startLine.split(DISCRIMINATOR));
         validateStartLineLength(startLineAttributes);
 
+        // Method 추출
         HttpMethod httpMethod = HttpMethod.getHttpMethod(startLineAttributes.get(0));
+
+        // Path 추출
         String[] parsePaths = parsePath(startLineAttributes.get(1));
         String path = parsePaths[0];
 
+        // Query 추출
         Map<String, String> parseQuery = new HashMap<>();
         if (parsePaths.length > 1) {
             parseQuery  = HttpRequestUtils.parseQueryParameter(parsePaths[1]);
         }
+
+        // Version 추출
         String version = startLineAttributes.get(2);
         return new HttpRequestStartLine(httpMethod, path, parseQuery, version);
     }
